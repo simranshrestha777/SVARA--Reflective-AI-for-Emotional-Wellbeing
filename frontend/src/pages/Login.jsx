@@ -1,0 +1,148 @@
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+
+function Login() {
+  const navigate = useNavigate()
+
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  function handleChange(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+
+    setLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch(
+        `${API_URL}/auth/login`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(form),
+        }
+      )
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(
+          data.detail || 'Unable to sign in.'
+        )
+      }
+
+    sessionStorage.setItem('svara_token', data.access_token)
+
+      navigate('/dashboard')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <main className="auth-page">
+      <div className="auth-card">
+
+        <div className="auth-logo">
+          Svara
+        </div>
+
+        <p className="auth-eyebrow">
+          Welcome back
+        </p>
+
+        <h1>
+          It's good to see you again.
+        </h1>
+
+        <p className="auth-description">
+          Come as you are. Your space is still here.
+        </p>
+
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit}
+        >
+
+          <label>
+            Email
+
+            <input
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Password
+
+            <input
+              name="password"
+              type="password"
+              placeholder="Your password"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <button
+            className="auth-button"
+            disabled={loading}
+          >
+            {loading
+              ? 'Signing in...'
+              : 'Sign in'}
+          </button>
+
+        </form>
+
+        {error && (
+          <p className="error-message">
+            {error}
+          </p>
+        )}
+
+        <p className="auth-switch">
+          Don't have an account?{' '}
+
+          <Link to="/register">
+            Create one
+          </Link>
+        </p>
+
+        <Link
+          to="/"
+          className="back-home"
+        >
+          ← Back to Svara
+        </Link>
+
+      </div>
+    </main>
+  )
+}
+
+export default Login
