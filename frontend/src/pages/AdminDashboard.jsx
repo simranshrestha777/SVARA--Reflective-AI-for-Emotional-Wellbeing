@@ -135,10 +135,11 @@ function AdminDashboard() {
 
       await loadAdminData()
 
-      setAdminNote((previous) => ({
-        ...previous,
-        [eventId]: '',
-      }))
+      setAdminNote((previous) => {
+     const next = { ...previous }
+     delete next[eventId]
+     return next
+   })
     } catch (error) {
       console.error(error)
       alert('Could not update this safety alert.')
