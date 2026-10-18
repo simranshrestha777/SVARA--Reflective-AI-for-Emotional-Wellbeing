@@ -68,4 +68,10 @@ svara/
     ├── requirements.txt
     └── .env.example
 ```
+## Screenshots
+![Chat screen](screenshots/Landing.png)
+![Login screen](screenshots/LogIn.png)
+![User Dashboard screen](screenshots/Dashboard.png)
+![Chat screen](screenshots/Chat.png)
+![Admin Dashboard screen](screenshots/Admin.png)
 
