@@ -69,9 +69,19 @@ svara/
     └── .env.example
 ```
 ## Screenshots
+
+**Landing Page**
 ![Chat screen](screenshots/Landing.png)
+
+**LogIn Page**
 ![Login screen](screenshots/LogIn.png)
+
+**User Dasboard Page**
 ![User Dashboard screen](screenshots/Dashboard.png)
+
+**Chat Page**
 ![Chat screen](screenshots/Chat.png)
+
+**Admin Page**
 ![Admin Dashboard screen](screenshots/Admin.png)
 
